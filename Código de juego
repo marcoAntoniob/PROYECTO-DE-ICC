@@ -272,3 +272,69 @@ texto_puntos_1=Text()
 texto_puntos_2=Text()
 text_turno=Text()
 turno=20
+while not fin_juego:
+
+    pos=pygame.mouse.get_pos()
+    punter.mover()
+    pun.mover()
+
+    pantalla.fill(NEGRO)
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            fin_juego = True
+        if evento.type == pygame.MOUSEBUTTONDOWN:
+            if(paso==1):
+                print("paso 1")
+                impactos=pygame.sprite.spritecollide(pun,btns,False)
+                if(ab_x in impactos):
+                    direccion=2
+                    paso=paso+1
+                    impactos=[]
+                elif(de_x in impactos):
+                    direccion=1
+                    paso=paso+1
+                    impactos=[]
+                elif(rec_x in impactos):
+                    for pic in mesa_x:
+                        mochila.add_to_bag(pic,1)
+                    mesa_x.clear()
+                    mesa_x_sprites.empty()
+                    mochila.mezclar_bag()
+                    sacar_piezas_nuevas(mesa_x)
+
+                    dibujando_piezas()
+            elif(paso==2):
+                print("paso 2")
+                impactos=pygame.sprite.spritecollide(pun,casillas_sprites,False)
+                if(len(impactos)==1):
+                    casilla_prin=impactos[0]
+                    paso=paso+1
+                    palabra = ""
+                    puntos_palabra=0
+                    m=0
+                    impactos=[]
+            elif(paso==3):
+                print("paso 3")
+                impactos=[]
+                impactos=pygame.sprite.spritecollide(pun,mesa_x_sprites,False)
+                impactos_btns=pygame.sprite.spritecollide(pun,btns,False)
+                if(len(impactos)==1):
+                    if(direccion==1):
+                        print("derecha")
+                        impactos[0].rect.x=casilla_prin.rect.x+m*x_sumar
+                        impactos[0].rect.y=casilla_prin.rect.y
+                        m=m+1
+                        x=(impactos[0].tuple.get_letter())
+                        palabra=palabra+x
+                        puntos_palabra=puntos_palabra+(impactos[0].tuple.get_score())
+                        fichas_palabra.append(impactos[0])
+                    elif(direccion==2):
+                        print("abajo")
+                        impactos[0].rect.x = casilla_prin.rect.x
+                        impactos[0].rect.y = casilla_prin.rect.y + m* y_sumar
+                        m = m + 1
+                        x = (impactos[0].tuple.get_letter())
+                        palabra = palabra + x
+                        puntos_palabra=puntos_palabra+(impactos[0].tuple.get_score())
+                        fichas_palabra.append(impactos[0])
+
