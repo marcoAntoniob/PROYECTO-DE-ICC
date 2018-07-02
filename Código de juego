@@ -57,3 +57,5 @@ letras={"A": 1,
                  "Y": 4,
                  "Z": 10,
                  "#": 0}
+class tuplas:
+    def __init__(self, letter, letter_values):
