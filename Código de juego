@@ -337,4 +337,125 @@ while not fin_juego:
                         palabra = palabra + x
                         puntos_palabra=puntos_palabra+(impactos[0].tuple.get_score())
                         fichas_palabra.append(impactos[0])
+                        
+               elif(len(impactos_btns)==1):
+                    if(check_x in impactos_btns):
+                        palabra=palabra.lower()
+                        palabra=palabra+"\n"
+                        if palabra in dictionary:
+                            print("si esta")
+                            for le in fichas_palabra:
+                                mesa_x.remove(le.tuple)
+                                mesa_x_sprites.remove(le)
+                                fichas_en_tabla.add(le)
+                            mochila.mezclar_bag()
+                            sacar_piezas_nuevas(mesa_x)
+                            dibujando_piezas()
+                            fichas_palabra=[]
+                            paso=paso+1
+                            turno=20+15*(MARGEN+LARGO)+MENU
+                            puntaje_jugador1=puntaje_jugador1+puntos_palabra
+                        else:
+                            print("no esta")
+                            for pa in fichas_palabra:
+                                mesa_x_sprites.remove(pa)
+                            dibujando_piezas()
+                            fichas_palabra=[]
+                            paso=paso+1
+                            turno=20+15*(MARGEN+LARGO)+MENU
+            elif (paso == 4):
+                print("paso 4")
+                impactos = pygame.sprite.spritecollide(pun, btns, False)
+                if (ab_y in impactos):
+                    direccion = 4
+                    paso = paso + 1
+                    impactos = []
+                elif (de_y in impactos):
+                    direccion = 3
+                    paso = paso + 1
+                    impactos = []
+                elif (rec_y in impactos):
+                    for pic in mesa_y:
+                        mochila.add_to_bag(pic, 1)
+                    mesa_y.clear()
+                    mesa_y_sprites.empty()
+                    mochila.mezclar_bag()
+                    sacar_piezas_nuevas(mesa_y)
 
+                    dibujando_piezas()
+            elif (paso == 5):
+                print("paso 5")
+                impactos = pygame.sprite.spritecollide(pun, casillas_sprites, False)
+                if (len(impactos) == 1):
+                    casilla_prin = impactos[0]
+                    paso = paso + 1
+                    palabra = ""
+                    puntos_palabra=0
+                    m = 0
+                    impactos = []
+            elif (paso == 6):
+                print("paso 6")
+                impactos = []
+                impactos = pygame.sprite.spritecollide(pun, mesa_y_sprites, False)
+                impactos_btns = pygame.sprite.spritecollide(pun, btns, False)
+                if (len(impactos) == 1):
+                    if (direccion == 3):
+                        print("derecha")
+                        impactos[0].rect.x = casilla_prin.rect.x + m * x_sumar
+                        impactos[0].rect.y = casilla_prin.rect.y
+                        m = m + 1
+                        x = (impactos[0].tuple.get_letter())
+                        palabra = palabra + x
+                        puntos_palabra=puntos_palabra+impactos[0].tuple.get_score()
+                        fichas_palabra.append(impactos[0])
+                    elif (direccion == 4):
+                        print("abajo")
+                        impactos[0].rect.x = casilla_prin.rect.x
+                        impactos[0].rect.y = casilla_prin.rect.y + m * y_sumar
+                        m = m + 1
+                        x = (impactos[0].tuple.get_letter())
+                        palabra = palabra + x
+                        puntos_palabra = puntos_palabra + impactos[0].tuple.get_score()
+                        fichas_palabra.append(impactos[0])
+                elif (len(impactos_btns) == 1):
+                    if (check_y in impactos_btns):
+                        palabra = palabra.lower()
+                        palabra=palabra+"\n"
+                        if palabra in dictionary:
+                            print("si esta")
+                            for le in fichas_palabra:
+                                mesa_y.remove(le.tuple)
+                                mesa_y_sprites.remove(le)
+                                fichas_en_tabla.add(le)
+                            mochila.mezclar_bag()
+                            sacar_piezas_nuevas(mesa_y)
+                            dibujando_piezas()
+                            fichas_palabra = []
+                            paso = 1
+                            turno=20
+                            puntaje_jugador2=puntaje_jugador2+puntos_palabra
+
+                        else:
+                            print("no esta")
+                            for pa in fichas_palabra:
+                                mesa_y_sprites.remove(pa)
+                            dibujando_piezas()
+                            fichas_palabra = []
+                            paso =  1
+                            turno=20
+
+    if(mochila.get_numero_tuplas()==0):
+        fin_juego=True
+    casillas_sprites.draw(pantalla)
+    mesa_x_sprites.draw(pantalla)
+    mesa_y_sprites.draw(pantalla)
+    btns.draw(pantalla)
+    mater.draw(pantalla)
+    fichas_en_tabla.draw(pantalla)
+    texto_puntos_1.render(pantalla,"PUNTOS: "+str(puntaje_jugador1),BLANCO,(20,470))
+    texto_puntos_2.render(pantalla, "PUNTOS: "+str(puntaje_jugador2), BLANCO, (20+15*(MARGEN+LARGO)+MENU, 470))
+    text_turno.render(pantalla,"TU TURNO",BLANCO,(turno,510))
+    reloj.tick(60)
+    pygame.display.flip()
+
+pygame.quit()
