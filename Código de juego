@@ -237,3 +237,38 @@ def dibujando_piezas():
 def sacar_piezas_nuevas(mesa):
     while(len(mesa)!=7 and mochila.get_numero_tuplas()>0):
         mesa.append(mochila.sacar_tupla())
+        
+        
+        dibujando_piezas()
+punter=puntero()
+pun=punto()
+btns=pygame.sprite.Group()
+#creacion de botones
+ab_x,ab_y=casilla("abajo.png"),casilla("abajo.png")
+de_x,de_y=casilla("derecha.png"),casilla("derecha.png")
+check_x,check_y=casilla("check.png"),casilla("check.png")
+rec_x,rec_y=casilla("recargar.png"),casilla("recargar.png")
+ab_x.rect.x,ab_x.rect.y=(4*MARGEN),(2*MARGEN+ALTO)*8
+ab_y.rect.x,ab_y.rect.y=(DIMENSION_VENTANA[0]-MENU)+3*MARGEN,(2*MARGEN+ALTO)*8
+de_x.rect.x,de_x.rect.y=ab_x.rect.x+MARGEN+LARGO,ab_x.rect.y
+de_y.rect.x,de_y.rect.y=ab_y.rect.x+MARGEN+LARGO,ab_y.rect.y
+check_x.rect.x,check_x.rect.y=de_x.rect.x+MARGEN+LARGO,de_x.rect.y
+check_y.rect.x,check_y.rect.y=de_y.rect.x+MARGEN+LARGO,de_y.rect.y
+rec_x.rect.x,rec_x.rect.y=check_x.rect.x+MARGEN+LARGO,check_x.rect.y
+rec_y.rect.x,rec_y.rect.y=check_y.rect.x+MARGEN+LARGO,check_y.rect.y
+btns.add(ab_x,ab_y,de_x,de_y,check_x,check_y,rec_x,rec_y)
+paso=1
+direccion=0
+mater=pygame.sprite.Group()
+mater.add(punter)
+mater.add(pun)
+pygame.mouse.set_visible(False)
+impactos=[]
+x_sumar=LARGO+MARGEN
+y_sumar=ALTO+MARGEN
+fichas_en_tabla=pygame.sprite.Group()
+fichas_palabra=[]
+texto_puntos_1=Text()
+texto_puntos_2=Text()
+text_turno=Text()
+turno=20
