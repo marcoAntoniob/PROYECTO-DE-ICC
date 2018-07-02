@@ -111,3 +111,72 @@ class mochila:
     def mezclar_bag(self):
         shuffle(self.bag)
 
+class word:
+    def __init__(self):
+        self.word=[]
+        self.word_text=""
+        self.score=0
+    def get_letter(self,nueva_tupla):
+        self.word.append(nueva_tupla)
+        self.word_text=self.word_text+nueva_tupla.get_letter()
+        self.score=self.score+nueva_tupla.get_score()
+
+#iniciamos con pygame
+pygame.init()
+DIMENSION_VENTANA = [(LARGO+MARGEN)*15+MARGEN+2*MENU, (ALTO+MARGEN)*15+MARGEN]
+pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
+pygame.display.set_caption("Damas")
+reloj = pygame.time.Clock()
+status="partida"
+fin_juego=False
+turno=1
+mesa_x=[]
+mesa_y=[]
+puntaje_jugador1=0
+puntaje_jugador2=0
+
+class Text:
+    def __init__(self, FontName=None, FontSize=30):
+        pygame.font.init()
+        self.font = pygame.font.Font(FontName, FontSize)
+        self.size = FontSize
+
+    def render(self, surface, text, color, pos):
+        x, y = pos
+        for i in text.split("\r"):
+            surface.blit(self.font.render(i, 1, color), (x, y))
+            y += self.size
+class punto(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image=pygame.Surface([2,2])
+        self.image.fill(BLANCO)
+        self.rect=self.image.get_rect()
+    def mover(self):
+        pos_mouse=pygame.mouse.get_pos()
+        self.rect.x=pos_mouse[0]
+        self.rect.y=pos_mouse[1]
+class puntero(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image=pygame.image.load("puntero.png").convert()
+        self.rect=self.image.get_rect()
+        self.image.set_colorkey(VERDE)
+    def mover(self):
+        pos_mouse=pygame.mouse.get_pos()
+        self.rect.x=pos_mouse[0]
+        self.rect.y=pos_mouse[1]
+class casilla(pygame.sprite.Sprite):
+    def __init__(self,imagen):
+        super().__init__()
+        self.image = pygame.image.load(imagen).convert()
+        self.rect=self.image.get_rect()
+
+class pieza(pygame.sprite.Sprite):
+    def __init__(self,tuple):
+        super().__init__()
+        self.image = pygame.image.load("letras/"+str(tuple.get_letter())+str(tuple.get_score())+".png").convert()
+        self.rect=self.image.get_rect()
+        self.tuple=tuple
+    def get_tupla(self):
+        return tuple
