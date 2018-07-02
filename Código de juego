@@ -180,3 +180,60 @@ class pieza(pygame.sprite.Sprite):
         self.tuple=tuple
     def get_tupla(self):
         return tuple
+        
+       #Las modificaciones para las casillas
+       
+casillas=[["p3.png","t.png","t.png","l2.png","t.png","t.png","t.png","p3.png","t.png","t.png","t.png","l2.png","t.png","t.png","p3.png"],
+          ["t.png","p2.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","p2.png","t.png"],
+          ["t.png","t.png","p2.png","t.png","t.png","t.png","l2.png","t.png","l2.png","t.png","t.png","t.png","p2.png","t.png","t.png"],
+          ["l2.png","t.png","t.png","p2.png","t.png","t.png","t.png","l2.png","t.png","t.png","t.png","p2.png","t.png","t.png","l2.png"],
+          ["t.png","t.png","t.png","t.png","p2.png","t.png","t.png","t.png","t.png","t.png","p2.png","t.png","t.png","t.png","t.png"],
+          ["t.png","l3.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","l3.png","t.png"],
+          ["t.png","t.png","l2.png","t.png","t.png","t.png","l2.png","t.png","l2.png","t.png","t.png","t.png","l2.png","t.png","t.png"],
+          ["p3.png","t.png","t.png","l2.png","t.png","t.png","t.png","p.png","t.png","t.png","t.png","l2.png","t.png","t.png","p3.png"],
+          ["t.png","t.png","l2.png","t.png","t.png","t.png","l2.png","t.png","l2.png","t.png","t.png","t.png","l2.png","t.png","t.png"],
+          ["t.png","l3.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","l3.png","t.png"],
+          ["t.png","t.png","t.png","t.png","p2.png","t.png","t.png","t.png","t.png","t.png","p2.png","t.png","t.png","t.png","t.png"],
+          ["l2.png","t.png","t.png","p2.png","t.png","t.png","t.png","l2.png","t.png","t.png","t.png","p2.png","t.png","t.png","l2.png"],
+          ["t.png","t.png","p2.png","t.png","t.png","t.png","l2.png","t.png","l2.png","t.png","t.png","t.png","p2.png","t.png","t.png"],
+          ["t.png","p2.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","l3.png","t.png","t.png","t.png","p2.png","t.png"],
+          ["p3.png","t.png","t.png","l2.png","t.png","t.png","t.png","p3.png","t.png","t.png","t.png","l2.png","t.png","t.png","p3.png"]]
+
+obj_casillas=[]
+casillas_sprites=pygame.sprite.Group()
+mochila=mochila()
+for c_0 in range(15):
+    obj_casillas.append([])
+    for c_1 in range(15):
+        nueva_casilla=casilla(casillas[c_0][c_1])
+        nueva_casilla.rect.x=MENU+MARGEN+c_1*(MARGEN+LARGO)
+        nueva_casilla.rect.y=MARGEN+c_0*(MARGEN+ALTO)
+        obj_casillas[c_0].append(nueva_casilla)
+        casillas_sprites.add(nueva_casilla)
+
+for p in range(7):
+    mesa_x.append(mochila.sacar_tupla())
+for q in range(7):
+    mesa_y.append(mochila.sacar_tupla())
+mesa_x_sprites=pygame.sprite.Group()
+mesa_y_sprites=pygame.sprite.Group()
+def dibujando_piezas():
+    mesa_x_sprites.empty()
+    mesa_y_sprites.empty()
+    n=0
+    for tup in mesa_x:
+        spr_pieza=pieza(tup)
+        spr_pieza.rect.x=4*MARGEN
+        spr_pieza.rect.y=(2*MARGEN+ALTO)*(n+1)
+        mesa_x_sprites.add(spr_pieza)
+        n=n+1
+    n=0
+    for tup_1 in mesa_y:
+        spr_pieza = pieza(tup_1)
+        spr_pieza.rect.x = (DIMENSION_VENTANA[0] - MENU + 3 * MARGEN)
+        spr_pieza.rect.y = (2 * MARGEN + ALTO) * (n + 1)
+        mesa_y_sprites.add(spr_pieza)
+        n=n+1
+def sacar_piezas_nuevas(mesa):
+    while(len(mesa)!=7 and mochila.get_numero_tuplas()>0):
+        mesa.append(mochila.sacar_tupla())
